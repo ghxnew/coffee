@@ -2,7 +2,7 @@
 <html>
 <head>
 <link href="1.css" rel="stylesheet"></link>
-<script src="11.js"></script>
+<script src="1.js"></script>
 <style>
 .column{ width:1260px; height:590px; margin:0 auto; background-color:#d8c1a5; overflow:hidden;}
 .arrow_left,.arrow_right{position:absolute;width:96px;height:96px;top:50%; margin-top:-30px;}
@@ -62,6 +62,63 @@
   </div>
 </div>
 
+<script>
+/*初始*/
+$(".column img").hide();
+$(".column img:eq(0)").show()
+/*右箭头,显示下一张图*/
+var n=0;/*记录图片下标值*/
+$(".arrow_right").click(function(){
+	if(n<$(".column img").length-1){
+		n=n+1;
+	}else{
+		n=0;
+	}
+	$(".column img").hide();
+	$(".column img:eq("+n+")").show();
+	$(".btns a").removeClass("current");
+	$(".btns a:eq("+n+")").addClass("current");
+})
+/*左箭头*/
+$(".arrow_left").click(function(){
+	if(n>0){
+		n=n-1;
+	}else{
+		n=$(".column img").length-1;
+	}
+	$(".column img").hide();
+	$(".column img:eq("+n+")").show();	
+	$(".btns a").removeClass("current");
+	$(".btns a:eq("+n+")").addClass("current");
+})
+/*数的按钮*/
+$(".btns a").click(function(){
+	n = $(".btns a").index(this);
+	$(".column img").hide();
+	$(".column img:eq("+n+")").show();
+	$(".btns a").removeClass("current");
+	$(this).addClass("current");
+})
+/*自动播放*/
+function changeN(){
+	if(n<$(".column img").length-1){
+		n=n+1;
+	}else{
+		n=0;
+	}
+	$(".column img").hide();
+	$(".column img:eq("+n+")").show();	
+	$(".btns a").removeClass("current");
+	$(".btns a:eq("+n+")").addClass("current");
+}
+var timer = setInterval(changeN,2000);
+/*控制*/
+$(".btns a,.arrow_left,.arrow_right").hover(function(){
+	clearInterval(timer);	
+},function(){
+	timer = setInterval(changeN,2000);
+})
+</script>
 
 </body>
 </html>
